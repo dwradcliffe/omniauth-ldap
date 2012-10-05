@@ -48,6 +48,8 @@ module OmniAuth
         rescue Exception => e
           return fail!(:ldap_error, e)
         end
+      rescue MissingCredentialsError => e
+	fail!(:missing_credentials, e)
       end
 
       uid {
