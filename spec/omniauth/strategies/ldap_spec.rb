@@ -56,14 +56,14 @@ describe "OmniAuth::Strategies::LDAP" do
     before(:each) do
       @adaptor.stub(:bind_as).and_return(false)
     end
-      it 'should raise MissingCredentialsError' do
-        lambda{post('/auth/ldap/callback', {})}.should raise_error OmniAuth::Strategies::LDAP::MissingCredentialsError
+      it 'should rescue MissingCredentialsError' do
+        lambda{post('/auth/ldap/callback', {})}.should_not raise_error OmniAuth::Strategies::LDAP::MissingCredentialsError
       end
-      it 'should raise MissingCredentialsError for nil password' do
-        lambda{post('/auth/ldap/callback', {:username => 'ping'})}.should raise_error OmniAuth::Strategies::LDAP::MissingCredentialsError
+      it 'should rescue MissingCredentialsError for nil password' do
+        lambda{post('/auth/ldap/callback', {:username => 'ping'})}.should_not raise_error OmniAuth::Strategies::LDAP::MissingCredentialsError
       end
-      it 'should raise MissingCredentialsError for empty password' do
-        lambda{post('/auth/ldap/callback', {:username => 'ping', :password => ''})}.should raise_error OmniAuth::Strategies::LDAP::MissingCredentialsError
+      it 'should rescue MissingCredentialsError for empty password' do
+        lambda{post('/auth/ldap/callback', {:username => 'ping', :password => ''})}.should_not raise_error OmniAuth::Strategies::LDAP::MissingCredentialsError
       end
       it 'should redirect to error page' do        
         post('/auth/ldap/callback', {:username => 'ping', :password => 'password'})
